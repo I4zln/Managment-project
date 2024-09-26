@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استعلام عن القطع المحذوفة</title>
+    <link rel="stylesheet" href="./css/itemc.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f4f3;
+            transition: background-color 0.3s ease;
+            overflow-y: auto;
+        }
+
+        /* Navbar Styles */
+        header {
+            width: 100%;
+            background-color: #00796b;
+            padding: 10px 0;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-link {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 0 30px;
+        }
+
+        .navbar-link:hover {
+            background-color: #004d40;
+            transform: scale(1.05);
+        }
+
+        main {
+            margin-top: 80px;
+            text-align: center;
+            width: 70%;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            border: 2px solid #00796b;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .search-container label {
+            font-size: 18px;
+            color: #00796b;
+        }
+
+        .search-container select {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+            border: 1px solid #00796b;
+            border-radius: 5px;
+            background-color: #f0f4f3;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #00796b;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e0f2f1;
+        }
+
+        .no-results {
+            color: #00796b;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #00796b;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar-container">
+            <a href="admin.html" class="navbar-link">الرئيسية</a>
+            <a href="whowere.html" class="navbar-link">من نحن</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>استعلام عن القطع </h2>
+
+        <!-- Search Container for Interactive Filtering -->
+        <div class="search-container">
+            <label for="filterPeriod">اختر فترة زمنية لاستعلام القطع:</label>
+            <select id="filterPeriod" onchange="filterDeletedParts()">
+                <option value="all">الكل</option>
+                <option value="week">قبل أسبوع</option>
+                <option value="month">قبل شهر</option>
+                <option value="year">قبل سنة</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>اسم القطعة</th>
+                    <th>الكمية</th>
+                    <th>تاريخ الإضافة</th>
+                </tr>
+            </thead>
+            <tbody id="deletedPartsTableBody">
+                <!-- سيتم ملؤها بالقطع المحذوفة بشكل ديناميكي -->
+            </tbody>
+        </table>
+
+        <p id="noResults" class="no-results" style="display:none;">لا توجد نتائج.</p>
+    </main>
+
+    <script>
+        // بيانات المحاكاة للعناصر المحذوفة
+        const deletedParts = [
+        { name: 'المعالج', quantity: 5, date: '2024-09-10' },
+        { name: 'الذاكرة العشوائية DDR0', quantity: 10, date: '2024-08-25' },
+        { name: 'الذاكرة العشوائية DDR1', quantity: 10, date: '2024-07-30' },
+        { name: 'الذاكرة العشوائية DDR2', quantity: 10, date: '2024-06-12' },
+        { name: 'الذاكرة العشوائية DDR3', quantity: 10, date: '2024-05-05' },
+        { name: 'الذاكرة العشوائية DDR4', quantity: 10, date: '2024-04-01' },
+        { name: 'الذاكرة العشوائية DDR5', quantity: 10, date: '2024-03-15' },
+        { name: 'القرص الصلب (HDD)', quantity: 8, date: '2023-12-15' },
+        { name: 'بطاقة الرسومات', quantity: 4, date: '2023-10-30' },
+        { name: 'لوحة الأم', quantity: 6, date: '2024-02-20' },
+        { name: 'لوحة مفاتيح USB', quantity: 12, date: '2023-11-11' },
+        { name: 'فأرة', quantity: 15, date: '2024-01-07' },
+        { name: 'فأرة USB', quantity: 10, date: '2023-09-30' }
+        ];
+
+        // وظيفة تصفية العناصر بناءً على الفترة الزمنية
+        function filterDeletedParts() {
+        const filter = document.getElementById('filterPeriod').value;
+        const tableBody = document.getElementById('deletedPartsTableBody');
+        const noResults = document.getElementById('noResults');
+        const today = new Date();
+        let filteredParts = [];
+
+        if (filter === 'week') {
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(today.getDate() - 7);
+            filteredParts = deletedParts.filter(part => new Date(part.date) >= oneWeekAgo);
+        } else if (filter === 'month') {
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(today.getMonth() - 1);
+            filteredParts = deletedParts.filter(part => new Date(part.date) >= oneMonthAgo);
+        } else if (filter === 'year') {
+            const oneYearAgo = new Date();
+            oneYearAgo.setFullYear(today.getFullYear() - 1);
+            filteredParts = deletedParts.filter(part => new Date(part.date) >= oneYearAgo);
+        } else {
+            filteredParts = deletedParts; // عرض جميع العناصر
+        }
+
+        // تفريغ الجدول الحالي
+        tableBody.innerHTML = '';
+
+        // إضافة الصفوف للعناصر المحذوفة
+        if (filteredParts.length > 0) {
+            filteredParts.forEach(part => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${part.name}</td>
+                    <td>${part.quantity}</td>
+                    <td>${part.date}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            noResults.style.display = 'none';
+        } else {
+            noResults.style.display = 'block';
+        }
+    }
+
+
+    window.onload = filterDeletedParts;
+</script>
+
+</body>
+</html>

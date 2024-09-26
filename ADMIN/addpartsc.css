@@ -1,0 +1,185 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f4f3;
+    transition: background-color 0.3s ease;
+    overflow-y: auto; /* السماح بالتمرير */
+}
+
+/* Navbar Styles */
+header {
+    width: 100%;
+    background-color: #00796b;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed; /* تثبيت الشريط في الأعلى */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #004d40; /* حد سفلي */
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin-left: 30px; /* زيادة المسافة بين الروابط */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    display: block;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    border-radius: 5px;
+}
+
+/* إضافة الروابط الرئيسية - من نحن */
+nav ul li a:hover {
+    background-color: #004d40;
+    color: #e0f2f1;
+    transform: translateY(-0.5px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+nav ul li a:active {
+    background-color: #388e3c;
+    transform: translateY(0);
+}
+
+/* Adjust main content */
+main {
+    margin-top: 100px; /* زيادة المسافة العلوية */
+    text-align: center;
+    width: 70%; /* تقليل عرض الصفحة */
+    max-width: 800px; /* تحديد أقصى عرض */
+    padding: 0 20px;
+}
+
+h2 {
+    font-size: 24px;
+    color: #00796b;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #00796b;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e0f2f1;
+}
+
+.add-part-container {
+    margin-top: 20px;
+    border: 2px solid #00796b; /* زيادة حجم الحدود */
+    border-radius: 10px;
+    padding: 30px; /* زيادة المساحة الداخلية */
+    background-color: #fff; /* خلفية بيضاء */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.part-select, .quantity-input {
+    padding: 10px;
+    font-size: 16px;
+    width: 220px; /* تعديل العرض للقائمة المنسدلة */
+    margin: 5px 10px; /* إضافة هوامش */
+    border: 1px solid #00796b;
+    border-radius: 5px;
+}
+
+.add-part-button {
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 10px 0; /* زيادة المسافة بين الأزرار */
+}
+
+.add-part-button:hover {
+    background-color: #004d40;
+    transform: scale(1.05); /* زيادة الحجم عند التحويم */
+}
+
+footer {
+    background-color: #00796b;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.footer-text {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .logo {
+        height: 100px; /* تقليل حجم الشعار في الشاشات الصغيرة */
+    }
+} 
